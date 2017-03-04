@@ -4,28 +4,51 @@ class Note extends Component {
   constructor(props) {
     super(props)
     // set initial state with `isEditing` and `isHoveringButtons` to initial boolean values
+    this.state = {
+      isEditing: false,
+      isHoveringButtons: false
+    };
     // bind functions here
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.delete = this.delete.bind(this)
+    this.update = this.update.bind(this)
+    this.toggleEdit = this.toggleEdit.bind(this);
   }
 
   delete() {
     // Send `noteId` of note back up to for deletion
+    // THIS IS CALLING THE DELETENOTE FUNCTION IN APP.JS
+    this.props.deleteNote(this.props.noteId);
   }
 
   update() {
     // Send new note description back up
     // Think about how you'll access the new description from here? HINT: 'refs'
+    var newText = this.refs.newText.value;
+    this.props.updateNote(newText, this.props.noteId);
+    this.toggleEdit();
   }
 
   toggleEdit() {
     // toggle isEditing state
+    this.setState({
+      isEditing: !this.state.isEditing
+    })
   }
 
   handleMouseEnter() {
     // set `isHoveringButtons` based on mouse enter event
+    this.setState({
+      isHoveringButtons: true
+    })
   }
 
   handleMouseLeave() {
     // set `isHoveringButtons` based on mouse leave event
+    this.setState({
+      isHoveringButtons: false
+    })
   }
 
   renderEditButtons() {
